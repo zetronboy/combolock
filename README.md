@@ -24,7 +24,7 @@ pip install -r requirements.txt
 ```
 
 ## Use
-it took 3min to solve a 6 dial puzzle, and 3 times this to solve 7 dials. 
+it took 3min to solve a 6 dial puzzle, and an hour to solve 7 dials. 
 
 create a JSON file with the letter combinations for each dial and then run the Python script.
 I included two examples (from Blue Prince). Just a list of lists. Named word1.json and word2.json

@@ -1,8 +1,9 @@
 #!/usr/bin/python
 # cryptex.py
 # print every combination of multi-tumbler lock data that forms an english word. Other languages might work.
+# presumes each dial has fewer than 26 letter possibilities. 
 # cracking puzzle from a video game where it has letter-based dials for finding a word.
-# the game puzzle was similar to the Cryptex cylinder from the Da Vinci Code
+# the game puzzle was similar to the Cryptex cylinder from the Da Vinci Code but had limited letters for each position. 
 # works for any number of dials in the combinataion
 # uses enchant to confirm is letter combo is a english word. Works on Windows ATM.
 
@@ -96,11 +97,11 @@ class Cryptex:
 #
 # get the filename and load it
 parser = ArgumentParser("Cryptex",usage="cryptex <datafile.json>", description="create a JSON with with a list of dial values. First list can be any length of tublers/dials. Each dial list within are just a list of string values possible for that tumber. ")
-parser.add_argument("file", help="datafile.json") # positional arg
+parser.add_argument("file", help="datafile.json") # positional arg, adding "args":"${command:pickArgs}" to launch.json will prompt for this value when run in debug
 parser.add_argument("-o", "--output", help="results.json file with list of possible words. Appends with new results.", default="results.json", required=False)
 parser.add_argument("-n", "--noenchant", help="dont try loading enchant and assume all words are valid", default=False, action='store_true')
 args = parser.parse_args()
-with open(args.file, 'r') as file:
+with open(args.file, 'r', encoding='UTF-8') as file:
     data = json.load(file)
 
 if not args.noenchant: # made a way to disable enchant for debugging when it was not working/available
@@ -147,7 +148,7 @@ def for_all_symbols_of(dial):
 def update_results(input_filename, output_filename, word_list):
     '''update the results.JSON with new results using input_filename is key to word_list'''
     if path.exists(output_filename):
-        with open(output_filename, 'r') as file:
+        with open(output_filename, 'r', encoding='UTF-8') as file:
             try:
                 content = json.load(file)
             except:
@@ -155,7 +156,7 @@ def update_results(input_filename, output_filename, word_list):
     else:
         content = {}
     content[input_filename] = word_list
-    with open(output_filename, 'w') as file:        
+    with open(output_filename, 'w', encoding='UTF-8') as file:        
         json.dump(content, file, indent=2)
 
 def main():    
